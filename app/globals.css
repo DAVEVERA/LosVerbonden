@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 @font-face {
   font-family: "Oswald Local";
   src: url("/fonts/oswald-latin-variable.woff2") format("woff2");
@@ -5,7 +7,6 @@
   font-weight: 200 700;
   font-display: swap;
 }
-@import "tailwindcss";
 
 :root {
   --cream: #f4e9db;
