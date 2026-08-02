@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 const ICON_PATH = "/icons/icons8";
 
 function Icon({ name, alt = "", size = 34 }: { name: string; alt?: string; size?: number }) {
-  return <img className="line-icon" src={`${ICON_PATH}/${name}.png`} alt={alt} width={size} height={size} />;
+  return <Image className="line-icon" src={`${ICON_PATH}/${name}.png`} alt={alt} width={size} height={size} unoptimized />;
 }
 
 const navItems = [
@@ -94,7 +94,7 @@ export default function Home() {
           </a>
           <nav className="desktop-nav" aria-label="Hoofdnavigatie">
             {navItems.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
-            <ContactLink className="button button-small" children="Kennismaken" />
+            <ContactLink className="button button-small">Kennismaken</ContactLink>
           </nav>
           <button className="menu-button" onClick={() => setMenuOpen(true)} aria-label="Menu openen" aria-expanded={menuOpen} aria-controls="mobile-menu">
             <span>Menu</span><Icon name="menu" size={28} />
@@ -160,7 +160,7 @@ export default function Home() {
             </article>
           ))}
         </div>
-        <ContactLink className="button button-primary centered-button" children="Begin met De Verkenning" />
+        <ContactLink className="button button-primary centered-button">Begin met De Verkenning</ContactLink>
       </section>
 
       <section className="journey section-soft">
@@ -211,7 +211,7 @@ export default function Home() {
         <div className="shell footer-bottom"><p>© {new Date().getFullYear()} Los Verbonden</p><p>Bij acute psychische nood: neem contact op met je huisarts of bel 112.</p><a href="https://icons8.com" target="_blank" rel="noreferrer">Iconen door Icons8</a></div>
       </footer>
 
-      <ContactLink className="mobile-sticky-cta" children="Plan een verkenning" />
+      <ContactLink className="mobile-sticky-cta">Plan een verkenning</ContactLink>
     </main>
   );
 }
