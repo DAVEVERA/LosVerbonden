@@ -9,12 +9,12 @@ Een warme, rustige en SEO-sterke mobile-first website voor Los Verbonden bouwen 
 - [x] Moodboards, context en concurrentie analyseren
 - [x] Veilige rollback-snapshot maken
 - [x] Project initialiseren en assets voorbereiden
-- [ ] Mobile-first menu + hero als één geheel bouwen
-- [ ] Kernsecties, copy, CTA en contactinformatie bouwen
-- [ ] Responsive gedrag, interacties en toegankelijkheid afwerken
-- [ ] Metadata, structured data en social preview afronden
-- [ ] Build, lint en browser-QA uitvoeren
-- [ ] Quality-audit uitvoeren en bevindingen herstellen
+- [x] Mobile-first menu + hero als één geheel bouwen
+- [x] Kernsecties, copy, CTA en contactinformatie bouwen
+- [x] Responsive gedrag, interacties en toegankelijkheid afwerken
+- [x] Metadata, structured data en social preview afronden
+- [x] Build, lint en browser-QA uitvoeren
+- [x] Quality-audit uitvoeren en bevindingen herstellen
 - [ ] Publiceren en productieversie verifiëren
 
 ## Completion Marker

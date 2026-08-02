@@ -18,9 +18,9 @@ export const metadata: Metadata = {
     siteName: "Los Verbonden",
     title: "Je relatie eindigde. Je leven niet.",
     description: "Met aandacht voor wat blijft. Persoonlijke begeleiding tijdens en na een scheiding in Tilburg.",
-    images: [{ url: "/og.png", width: 1732, height: 909, alt: "Los Verbonden — Je relatie eindigde. Je leven niet." }],
+    images: [{ url: "/og.webp", width: 1200, height: 630, alt: "Los Verbonden — Je relatie eindigde. Je leven niet." }],
   },
-  twitter: { card: "summary_large_image", title: "Je relatie eindigde. Je leven niet.", description: "Los Verbonden helpt je opnieuw grond te vinden — in jouw tempo.", images: ["/og.png"] },
+  twitter: { card: "summary_large_image", title: "Je relatie eindigde. Je leven niet.", description: "Los Verbonden helpt je opnieuw grond te vinden — in jouw tempo.", images: ["/og.webp"] },
 };
 
 export const viewport: Viewport = {

@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
+async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", { headers: { accept: "text/html" } }),
+    new Request(`http://localhost${pathname}`, { headers: { accept: "text/html" } }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
     { waitUntil() {}, passThroughOnException() {} },
   );
@@ -26,9 +26,21 @@ test("server-renders the finished Los Verbonden homepage", async () => {
   assert.match(html, /De Verkenning/);
   assert.match(html, /mailto:info@losverbonden\.nl/);
   assert.match(html, /tel:\+31643574633/);
-  assert.match(html, /property="og:image" content="https:\/\/losverbonden\.nl\/og\.png"/);
+  assert.match(html, /property="og:image" content="https:\/\/losverbonden\.nl\/og\.webp"/);
   assert.match(html, /application\/ld\+json/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
+});
+
+test("publishes crawlable robots and sitemap routes", async () => {
+  const [robotsResponse, sitemapResponse] = await Promise.all([
+    render("/robots.txt"),
+    render("/sitemap.xml"),
+  ]);
+
+  assert.equal(robotsResponse.status, 200);
+  assert.match(await robotsResponse.text(), /Sitemap: https:\/\/losverbonden\.nl\/sitemap\.xml/i);
+  assert.equal(sitemapResponse.status, 200);
+  assert.match(await sitemapResponse.text(), /<loc>https:\/\/losverbonden\.nl\/<\/loc>/i);
 });
 
 test("keeps mobile-first UX, metadata and project assets wired", async () => {
@@ -55,9 +67,9 @@ test("keeps mobile-first UX, metadata and project assets wired", async () => {
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 
   await Promise.all([
-    access(new URL("../public/images/hero-dunes.png", import.meta.url)),
-    access(new URL("../public/images/music-reflection.png", import.meta.url)),
+    access(new URL("../public/images/hero-dunes.webp", import.meta.url)),
+    access(new URL("../public/images/music-reflection.webp", import.meta.url)),
     access(new URL("../public/icons/icons8/heart.png", import.meta.url)),
-    access(new URL("../public/og.png", import.meta.url)),
+    access(new URL("../public/og.webp", import.meta.url)),
   ]);
 });

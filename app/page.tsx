@@ -39,7 +39,7 @@ const journey = [
   { icon: "sunrise", title: "Bewegen", text: "Een passende stap zetten." },
 ] as const;
 
-function ContactLink({ className = "button button-primary", children = "Plan een verkennend gesprek" }: { className?: string; children?: React.ReactNode }) {
+function ContactLink({ className = "button button-primary", children = "Vraag een verkennend gesprek aan" }: { className?: string; children?: React.ReactNode }) {
   return (
     <a className={className} href="mailto:info@losverbonden.nl?subject=Verkennend%20gesprek%20Los%20Verbonden">
       <span>{children}</span><Icon name="arrow-right" size={20} />
@@ -50,7 +50,9 @@ function ContactLink({ className = "button button-primary", children = "Plan een
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const wasMenuOpenRef = useRef(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 28);
@@ -62,6 +64,8 @@ export default function Home() {
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     if (menuOpen) closeButtonRef.current?.focus();
+    if (!menuOpen && wasMenuOpenRef.current) menuButtonRef.current?.focus();
+    wasMenuOpenRef.current = menuOpen;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
       if (event.key === "Tab" && menuOpen) {
@@ -84,7 +88,7 @@ export default function Home() {
   return (
     <main>
       <section className="hero" id="boven">
-        <Image src="/images/hero-dunes.png" alt="Een persoon loopt over een rustig duinpad richting de ochtendzon" fill priority unoptimized sizes="100vw" className="hero-image" />
+        <Image src="/images/hero-dunes.webp" alt="Een persoon loopt over een rustig duinpad richting de ochtendzon" fill priority unoptimized sizes="100vw" className="hero-image" />
         <div className="hero-shade" />
 
         <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
@@ -96,7 +100,7 @@ export default function Home() {
             {navItems.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
             <ContactLink className="button button-small">Kennismaken</ContactLink>
           </nav>
-          <button className="menu-button" onClick={() => setMenuOpen(true)} aria-label="Menu openen" aria-expanded={menuOpen} aria-controls="mobile-menu">
+          <button ref={menuButtonRef} className="menu-button" onClick={() => setMenuOpen(true)} aria-label="Menu openen" aria-expanded={menuOpen} aria-controls="mobile-menu">
             <span>Menu</span><Icon name="menu" size={28} />
           </button>
         </header>
@@ -109,7 +113,7 @@ export default function Home() {
             <ContactLink />
             <a className="text-link light-link" href="#aanpak">Bekijk hoe we werken <span aria-hidden="true">↓</span></a>
           </div>
-          <p className="reassurance"><Icon name="check" size={18} /> Vrijblijvend <span>·</span> zonder oordeel <span>·</span> binnen 2 werkdagen reactie</p>
+          <p className="reassurance"><Icon name="check" size={18} /> Vrijblijvend <span>·</span> zonder oordeel <span>·</span> persoonlijk contact</p>
         </div>
         <div className="hero-ribbon"><Icon name="music" size={20} /><span>Jouw verhaal. Jouw muziek. Jouw nieuwe hoofdstuk.</span></div>
       </section>
@@ -160,7 +164,7 @@ export default function Home() {
             </article>
           ))}
         </div>
-        <ContactLink className="button button-primary centered-button">Begin met De Verkenning</ContactLink>
+        <ContactLink className="button button-primary centered-button">Vraag De Verkenning aan</ContactLink>
       </section>
 
       <section className="journey section-soft">
@@ -174,7 +178,7 @@ export default function Home() {
 
       <section className="music-section section">
         <div className="shell music-grid">
-          <div className="music-image-wrap"><Image src="/images/music-reflection.png" alt="Koptelefoon, leeg notitieboek en koffie op een houten tafel in warm daglicht" fill unoptimized sizes="(max-width: 800px) 100vw, 50vw" className="cover-image" /><span className="image-label"><Icon name="music" size={22} /> Muziek als methodiek</span></div>
+          <div className="music-image-wrap"><Image src="/images/music-reflection.webp" alt="Koptelefoon, leeg notitieboek en koffie op een houten tafel in warm daglicht" fill unoptimized sizes="(max-width: 800px) 100vw, 50vw" className="cover-image" /><span className="image-label"><Icon name="music" size={22} /> Muziek als methodiek</span></div>
           <div className="music-copy"><p className="eyebrow">Woorden vinden</p><h2>Soms zegt een lied wat jij nog niet kunt zeggen.</h2><p>Muziek kan troosten, spiegelen, herinneren en motiveren. Daarom geven we muziek een plek in gesprekken en reflectie — nooit als truc, altijd als ingang naar wat voor jou betekenis heeft.</p><ul><li><Icon name="headphones" size={24} />Ontdek welke muziek bij jouw fase past.</li><li><Icon name="document" size={24} />Bouw aan de soundtrack van je nieuwe hoofdstuk.</li><li><Icon name="heart" size={24} />Laat gevoel er zijn, zonder het direct op te lossen.</li></ul><p className="script-line left">Jouw verhaal. Jouw muziek. Jouw nieuwe hoofdstuk.</p></div>
         </div>
       </section>
@@ -194,6 +198,7 @@ export default function Home() {
           <article><span>Identiteit</span><h3>Wie ben je als het ‘wij’ verdwijnt?</h3><p>Over rollen loslaten en ontdekken wat van jou is gebleven.</p></article>
           <article><span>Werk & leiderschap</span><h3>Sterk zijn is niet hetzelfde als niets voelen</h3><p>Over blijven functioneren terwijl je privé opnieuw moet beginnen.</p></article>
         </div>
+        <div className="story-followup"><p>Herken je iets in deze thema&apos;s? Je hoeft je verhaal nog niet rond te hebben.</p><ContactLink /></div>
       </section>
 
       <section className="agenda section-soft" id="agenda">
@@ -201,7 +206,7 @@ export default function Home() {
       </section>
 
       <section className="final-cta">
-        <Image src="/images/hero-dunes.png" alt="Duinpad in warm ochtendlicht" fill unoptimized sizes="100vw" className="cover-image" />
+        <Image src="/images/hero-dunes.webp" alt="Duinpad in warm ochtendlicht" fill unoptimized sizes="100vw" className="cover-image" />
         <div className="final-shade" />
         <div className="shell final-content"><p className="eyebrow light">Een eerste stap</p><h2>Je hoeft vandaag niet te weten<br />hoe je toekomst eruitziet.</h2><p>Je hoeft alleen te besluiten dat je er niet alleen voor wilt blijven staan.</p><ContactLink /></div>
       </section>
@@ -211,7 +216,7 @@ export default function Home() {
         <div className="shell footer-bottom"><p>© {new Date().getFullYear()} Los Verbonden</p><p>Bij acute psychische nood: neem contact op met je huisarts of bel 112.</p><a href="https://icons8.com" target="_blank" rel="noreferrer">Iconen door Icons8</a></div>
       </footer>
 
-      <ContactLink className="mobile-sticky-cta">Plan een verkenning</ContactLink>
+      <ContactLink className="mobile-sticky-cta">Vraag een verkenning aan</ContactLink>
     </main>
   );
 }
