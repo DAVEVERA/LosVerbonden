@@ -15,8 +15,8 @@ Een warme, rustige en SEO-sterke mobile-first website voor Los Verbonden bouwen 
 - [x] Metadata, structured data en social preview afronden
 - [x] Build, lint en browser-QA uitvoeren
 - [x] Quality-audit uitvoeren en bevindingen herstellen
-- [ ] Publiceren en productieversie verifiëren
+- [x] Publiceren en productieversie verifiëren
 
 ## Completion Marker
 
-ALL_TASKS_COMPLETE: false
+ALL_TASKS_COMPLETE: true
